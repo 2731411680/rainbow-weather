@@ -352,7 +352,7 @@
       return ["low", "风险较低", "降雨风险较低，按日常出行准备即可。"];
     }
 
-    function render() {
+    function render(keepScrollLeft) {
       const app = document.getElementById("app");
       const current = data.current;
       const today = day(0);
@@ -416,10 +416,27 @@
 
       app.querySelectorAll(".day").forEach(button => {
         button.addEventListener("click", () => {
+          const days = document.querySelector(".days");
+          const scrollLeft = days ? days.scrollLeft : 0;
           selected = Number(button.dataset.day);
-          render();
+          render(scrollLeft);
         });
       });
+
+      if (typeof keepScrollLeft === "number") {
+        const days = document.querySelector(".days");
+        if (days) {
+          days.scrollLeft = keepScrollLeft;
+          const active = days.querySelector(".day.active");
+          if (active) {
+            const left = active.offsetLeft - days.offsetLeft;
+            const right = left + active.offsetWidth;
+            if (left < days.scrollLeft || right > days.scrollLeft + days.clientWidth) {
+              active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+            }
+          }
+        }
+      }
     }
 
     async function load() {
