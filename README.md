@@ -1,4 +1,4 @@
-# 榆次天气 iPhone 主屏幕网页 App
+# 天气 iPhone 主屏幕网页 App
 
 这是一个适合 iPhone Safari「添加到主屏幕」的天气网页 App。
 
